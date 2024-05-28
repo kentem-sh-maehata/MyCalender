@@ -1,0 +1,24 @@
+body{
+  font-family: 'Courier New', monospace;
+  table{
+    border: 2px solid #eee;
+    font-size: 14px;
+    border-collapse: collapse;
+    width: 250px;
+    thead{
+      background: #eee;
+    }
+    tbody{
+      background: #fff;
+      width: 230px;
+    }
+    tfoot tr{
+      background: #eee;
+      text-align: center;
+    }
+
+    th, td{
+      text-align: center;
+    }
+  }
+}

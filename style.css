@@ -1,0 +1,23 @@
+body {
+  font-family: "Courier New", monospace;
+}
+body table {
+  border: 2px solid #eee;
+  font-size: 14px;
+  border-collapse: collapse;
+  width: 250px;
+}
+body table thead {
+  background: #eee;
+}
+body table tbody {
+  background: #fff;
+  width: 230px;
+}
+body table tfoot tr {
+  background: #eee;
+  text-align: center;
+}
+body table th, body table td {
+  text-align: center;
+}/*# sourceMappingURL=style.css.map */
