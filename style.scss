@@ -11,14 +11,36 @@ body{
     tbody{
       background: #fff;
       width: 230px;
+      td{
+        &:first-child{
+          color:red
+        }
+        &:last-child{
+          color: blue;
+        }
+      }
+      .disabled{
+        opacity:.3
+      }
+      .today{
+        font-weight: bold;
+      }
     }
     tfoot tr{
       background: #eee;
       text-align: center;
+      font-weight: bold;
     }
 
     th, td{
       text-align: center;
+      padding: 8px;
+    }
+    #prev,
+    #next,
+    #today{
+      cursor: pointer;
+      user-select: none;
     }
   }
 }

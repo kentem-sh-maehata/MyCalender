@@ -14,10 +14,32 @@ body table tbody {
   background: #fff;
   width: 230px;
 }
+body table tbody td:first-child {
+  color: red;
+}
+body table tbody td:last-child {
+  color: blue;
+}
+body table tbody .disabled {
+  opacity: 0.3;
+}
+body table tbody .today {
+  font-weight: bold;
+}
 body table tfoot tr {
   background: #eee;
   text-align: center;
+  font-weight: bold;
 }
 body table th, body table td {
   text-align: center;
+  padding: 8px;
+}
+body table #prev,
+body table #next,
+body table #today {
+  cursor: pointer;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
 }/*# sourceMappingURL=style.css.map */
