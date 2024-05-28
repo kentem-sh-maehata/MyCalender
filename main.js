@@ -1,7 +1,10 @@
 {
-    var year = new Date().getFullYear();
-    var month = new Date().getMonth();
+    var year_1 = new Date().getFullYear();
+    var month_1 = new Date().getMonth();
     var today = new Date().toLocaleString();
+    var tbody_1 = document.querySelector("tbody");
+    var next = document.getElementById("next");
+    var prev = document.getElementById("prev");
     console.log(today);
     function getCalender(year, month) {
         var dates = [];
@@ -39,8 +42,10 @@
         return dates;
     }
     function setCalender(year, month) {
+        while (tbody_1 === null || tbody_1 === void 0 ? void 0 : tbody_1.firstChild) { //ドットインストールから
+            tbody_1.removeChild(tbody_1.firstChild);
+        }
         var dates = [];
-        var tbody = document.querySelector("tbody");
         dates.push.apply(dates, getCalender(year, month));
         var idx = 0;
         for (var i = 0; i < dates.length / 7; i++) {
@@ -55,8 +60,25 @@
                 tr.appendChild(td);
                 idx++;
             }
-            tbody === null || tbody === void 0 ? void 0 : tbody.append(tr);
+            tbody_1 === null || tbody_1 === void 0 ? void 0 : tbody_1.append(tr);
         }
     }
-    setCalender(year, month);
+    //カレンダー作成の実行
+    setCalender(year_1, month_1);
+    next === null || next === void 0 ? void 0 : next.addEventListener('click', function () {
+        month_1++;
+        if (month_1 === 13) {
+            month_1 = 1;
+            year_1++;
+        }
+        setCalender(year_1, month_1);
+    });
+    prev === null || prev === void 0 ? void 0 : prev.addEventListener('click', function () {
+        month_1--;
+        if (month_1 === 0) {
+            month_1 = 12;
+            year_1--;
+        }
+        setCalender(year_1, month_1);
+    });
 }

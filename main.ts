@@ -1,7 +1,11 @@
 {
-  const year = new Date().getFullYear()
-  const month = new Date().getMonth()
-  const today = new Date().toLocaleString()
+  let year = new Date().getFullYear()
+  let month = new Date().getMonth()
+  let today = new Date().toLocaleString()
+
+  const tbody = document.querySelector("tbody")
+  const next = document.getElementById("next")
+  const prev = document.getElementById("prev")
   console.log(today)
 
   function getCalender(year:number,month:number){
@@ -48,8 +52,10 @@
 
 
   function setCalender(year:number,month:number){
+    while(tbody?.firstChild){ //ドットインストールから
+      tbody.removeChild(tbody.firstChild)
+    }
     const dates:object[] = []
-    const tbody = document.querySelector("tbody")
     dates.push(...getCalender(year,month))
     
     let idx = 0
@@ -63,7 +69,7 @@
           td.innerHTML=String(dateObj.date)
         if("isDisabled" in dateObj && dateObj.isDisabled)
           td.classList.add('disabled')
-        
+
         tr.appendChild(td)
 
         idx++
@@ -71,5 +77,24 @@
       tbody?.append(tr)
     }
   }
+  //カレンダー作成の実行
   setCalender(year,month)
+
+  next?.addEventListener('click',()=>{
+
+    month ++
+    if(month === 13){
+      month = 1
+      year ++
+    }
+    setCalender(year,month)
+  })
+  prev?.addEventListener('click',()=>{
+    month --
+    if(month === 0){
+      month = 12
+      year --
+    }
+    setCalender(year,month)
+  })
 }
