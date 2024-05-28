@@ -1,11 +1,13 @@
 {
-  const year = new Date().getFullYear()
-  const month = new Date().getMonth()
+  const year:number = new Date().getFullYear()
+  const month:number = new Date().getMonth()
   const today = new Date().toLocaleString()
   console.log(today)
 
-  function getCalenderHead(year,month){
+  function getCalender(year:number,month:number){
     const dates:object[] = []
+
+    //head部分
     const d = new Date(year, month, 0).getDate() //前月の最終日付
     const n = new Date(year, month, 1).getDay()  //今月1日の曜日
 
@@ -16,13 +18,8 @@
         isDisabled:true,
       })
     }
-    console.log(dates)
-    return dates
-  }
-  // getCalenderHead()
 
-  function getCalenderBody(year,month){
-    const dates:object[] = []
+    // body部分
     const lastDate = new Date(year,month+1,0).getDate()
 
     for(let i=1;i<= lastDate; i++){
@@ -32,36 +29,23 @@
         isDisabled: false,
       })
     }
+
+    //foot部分
     console.log(dates)
     return dates
   }
-  // getCalenderBody()
 
-  function getCalenderFoot(year,month){
+  function setCalender(){
     const dates:object[] = []
-    const d = new Date(year,month+1,0).getDate() //当月最終日
-    const n = new Date(year,month+1,0).getDay()  //当月最終曜日
-
-    let date = 1
-    for(let i=n+1;i<7;i++){
-      dates.push({
-        date:date,
-        isToday:false,
-        isDesabled:true,
-      })
-      date ++
+    dates.push(getCalender(year,month))
+    console.log(dates)
+    
+    for(let i=0;i<dates.length/7;i++){
+      const tr = document.createElement("tr")
+      for(let j=0;j<7;j++){
+        
+      }
     }
-    console.log(dates)
-    return dates
-  }
-  // getCalenderFoot()
-
-  function getCalender(year,month){
-    const dates:object[] = []
-    dates.push(...getCalenderHead(year,month))
-    dates.push(...getCalenderBody(year,month))
-    dates.push(...getCalenderFoot(year,month))
-    console.log(dates)
   }
   getCalender(year,month)
 }
