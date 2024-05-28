@@ -1,6 +1,6 @@
 {
-  const year:number = new Date().getFullYear()
-  const month:number = new Date().getMonth()
+  const year = new Date().getFullYear()
+  const month = new Date().getMonth()
   const today = new Date().toLocaleString()
   console.log(today)
 
@@ -31,21 +31,45 @@
     }
 
     //foot部分
-    console.log(dates)
-    return dates
+      const n2 = new Date(year,month+1,0).getDay()  //当月最終曜日
+
+      let date = 1
+      for(let i=n2+1;i<7;i++){
+        dates.push({
+          date:date,
+          isToday:false,
+          isDisabled:true,
+        })
+        date ++
+      }
+      console.log(dates)
+      return dates
   }
 
-  function setCalender(){
+
+  function setCalender(year:number,month:number){
     const dates:object[] = []
-    dates.push(getCalender(year,month))
-    console.log(dates)
+    const tbody = document.querySelector("tbody")
+    dates.push(...getCalender(year,month))
     
+    let idx = 0
     for(let i=0;i<dates.length/7;i++){
       const tr = document.createElement("tr")
       for(let j=0;j<7;j++){
+        const td = document.createElement("td")
+        let dateObj:object= dates[idx]
         
+        if("date" in dateObj)
+          td.innerHTML=String(dateObj.date)
+        if("isDisabled" in dateObj && dateObj.isDisabled)
+          td.classList.add('disabled')
+        
+        tr.appendChild(td)
+
+        idx++
       }
+      tbody?.append(tr)
     }
   }
-  getCalender(year,month)
+  setCalender(year,month)
 }

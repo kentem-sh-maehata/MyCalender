@@ -1,6 +1,6 @@
 {
-    var year_1 = new Date().getFullYear();
-    var month_1 = new Date().getMonth();
+    var year = new Date().getFullYear();
+    var month = new Date().getMonth();
     var today = new Date().toLocaleString();
     console.log(today);
     function getCalender(year, month) {
@@ -25,50 +25,38 @@
             });
         }
         //foot部分
+        var n2 = new Date(year, month + 1, 0).getDay(); //当月最終曜日
+        var date = 1;
+        for (var i = n2 + 1; i < 7; i++) {
+            dates.push({
+                date: date,
+                isToday: false,
+                isDisabled: true,
+            });
+            date++;
+        }
         console.log(dates);
         return dates;
     }
-    // getCalenderHead()
-    // function getCalenderBody(year,month){
-    //   const dates:object[] = []
-    //   const lastDate = new Date(year,month+1,0).getDate()
-    //   for(let i=1;i<= lastDate; i++){
-    //     dates.push({
-    //       date:i,
-    //       isToday: false,
-    //       isDisabled: false,
-    //     })
-    //   }
-    //   console.log(dates)
-    //   return dates
-    // }
-    // // getCalenderBody()
-    // function getCalenderFoot(year,month){
-    //   const dates:object[] = []
-    //   const d = new Date(year,month+1,0).getDate() //当月最終日
-    //   const n = new Date(year,month+1,0).getDay()  //当月最終曜日
-    //   let date = 1
-    //   for(let i=n+1;i<7;i++){
-    //     dates.push({
-    //       date:date,
-    //       isToday:false,
-    //       isDisabled:true,
-    //     })
-    //     date ++
-    //   }
-    //   console.log(dates)
-    //   return dates
-    // }
-    // getCalenderFoot()
-    function setCalender() {
+    function setCalender(year, month) {
         var dates = [];
-        dates.push(getCalender(year_1, month_1));
-        console.log(dates);
+        var tbody = document.querySelector("tbody");
+        dates.push.apply(dates, getCalender(year, month));
+        var idx = 0;
         for (var i = 0; i < dates.length / 7; i++) {
             var tr = document.createElement("tr");
             for (var j = 0; j < 7; j++) {
+                var td = document.createElement("td");
+                var dateObj = dates[idx];
+                if ("date" in dateObj)
+                    td.innerHTML = String(dateObj.date);
+                if ("isDisabled" in dateObj && dateObj.isDisabled)
+                    td.classList.add('disabled');
+                tr.appendChild(td);
+                idx++;
             }
+            tbody === null || tbody === void 0 ? void 0 : tbody.append(tr);
         }
     }
-    getCalender(year_1, month_1);
+    setCalender(year, month);
 }
