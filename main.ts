@@ -1,11 +1,12 @@
 {
   let year = new Date().getFullYear()
   let month = new Date().getMonth()
-  let today = new Date().toLocaleString()
-
+  const today = new Date()
+  
   const tbody = document.querySelector("tbody")
   const next = document.getElementById("next")
   const prev = document.getElementById("prev")
+  const todayBtn = document.getElementById("today")
   console.log(today)
 
   function getCalender(year:number,month:number){
@@ -52,9 +53,20 @@
 
 
   function setCalender(year:number,month:number){
+    //todayの処理
+    let todayFlag = false
+    let todayDate
+    if(year === today.getFullYear() && month === today.getMonth()){
+      todayDate = today.getDate()
+      todayFlag = true
+    }
+
     while(tbody?.firstChild){ //ドットインストールから
       tbody.removeChild(tbody.firstChild)
     }
+    const title = document.getElementById("title")
+    if(title && "innerHTML" in title)
+      title.innerHTML = `${year}/${month}`
     const dates:object[] = []
     dates.push(...getCalender(year,month))
     
@@ -69,9 +81,10 @@
           td.innerHTML=String(dateObj.date)
         if("isDisabled" in dateObj && dateObj.isDisabled)
           td.classList.add('disabled')
-
+        if(todayFlag && todayDate === idx-2)
+          td.classList.add('today')
         tr.appendChild(td)
-
+        
         idx++
       }
       tbody?.append(tr)
@@ -80,6 +93,7 @@
   //カレンダー作成の実行
   setCalender(year,month)
 
+  //前後、todayのクリック処理
   next?.addEventListener('click',()=>{
 
     month ++
@@ -97,4 +111,10 @@
     }
     setCalender(year,month)
   })
+  todayBtn?.addEventListener('click',()=>{
+    year = today.getFullYear()
+    month = today.getMonth()
+    setCalender(year,month)
+  })
+
 }

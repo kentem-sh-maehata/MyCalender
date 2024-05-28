@@ -1,11 +1,12 @@
 {
     var year_1 = new Date().getFullYear();
     var month_1 = new Date().getMonth();
-    var today = new Date().toLocaleString();
+    var today_1 = new Date();
     var tbody_1 = document.querySelector("tbody");
     var next = document.getElementById("next");
     var prev = document.getElementById("prev");
-    console.log(today);
+    var todayBtn = document.getElementById("today");
+    console.log(today_1);
     function getCalender(year, month) {
         var dates = [];
         //head部分
@@ -42,9 +43,19 @@
         return dates;
     }
     function setCalender(year, month) {
+        //todayの処理
+        var todayFlag = false;
+        var todayDate;
+        if (year === today_1.getFullYear() && month === today_1.getMonth()) {
+            todayDate = today_1.getDate();
+            todayFlag = true;
+        }
         while (tbody_1 === null || tbody_1 === void 0 ? void 0 : tbody_1.firstChild) { //ドットインストールから
             tbody_1.removeChild(tbody_1.firstChild);
         }
+        var title = document.getElementById("title");
+        if (title && "innerHTML" in title)
+            title.innerHTML = "".concat(year, "/").concat(month);
         var dates = [];
         dates.push.apply(dates, getCalender(year, month));
         var idx = 0;
@@ -57,6 +68,8 @@
                     td.innerHTML = String(dateObj.date);
                 if ("isDisabled" in dateObj && dateObj.isDisabled)
                     td.classList.add('disabled');
+                if (todayFlag && todayDate === idx - 2)
+                    td.classList.add('today');
                 tr.appendChild(td);
                 idx++;
             }
@@ -65,6 +78,7 @@
     }
     //カレンダー作成の実行
     setCalender(year_1, month_1);
+    //前後、todayのクリック処理
     next === null || next === void 0 ? void 0 : next.addEventListener('click', function () {
         month_1++;
         if (month_1 === 13) {
@@ -79,6 +93,11 @@
             month_1 = 12;
             year_1--;
         }
+        setCalender(year_1, month_1);
+    });
+    todayBtn === null || todayBtn === void 0 ? void 0 : todayBtn.addEventListener('click', function () {
+        year_1 = today_1.getFullYear();
+        month_1 = today_1.getMonth();
         setCalender(year_1, month_1);
     });
 }
