@@ -12,7 +12,7 @@
   function getCalender(year:number,month:number){
     const dates:object[] = []
 
-    //head部分
+    //前月部分
     const d = new Date(year, month, 0).getDate() //前月の最終日付
     const n = new Date(year, month, 1).getDay()  //今月1日の曜日
 
@@ -24,7 +24,7 @@
       })
     }
 
-    // body部分
+    // 今月部分
     const lastDate = new Date(year,month+1,0).getDate()
 
     for(let i=1;i<= lastDate; i++){
@@ -35,20 +35,19 @@
       })
     }
 
-    //foot部分
-      const n2 = new Date(year,month+1,0).getDay()  //当月最終曜日
-
-      let date = 1
-      for(let i=n2+1;i<7;i++){
-        dates.push({
-          date:date,
-          isToday:false,
-          isDisabled:true,
-        })
-        date ++
-      }
-      console.log(dates)
-      return dates
+    //来月部分
+    const n2 = new Date(year,month+1,0).getDay()  //当月最終曜日
+    let date = 1
+    for(let i=n2+1;i<7;i++){
+      dates.push({
+        date:date,
+        isToday:false,
+        isDisabled:true,
+      })
+      date ++
+    }
+    console.log(dates)
+    return dates
   }
 
 
@@ -61,15 +60,21 @@
       todayFlag = true
     }
 
-    while(tbody?.firstChild){ //ドットインストールから
+    //tbodyの子要素の削除
+    //ドットインストールから
+    while(tbody?.firstChild){ 
       tbody.removeChild(tbody.firstChild)
     }
+    
+    //タイトルの変更
     const title = document.getElementById("title")
     if(title && "innerHTML" in title)
       title.innerHTML = `${year}/${month}`
+
     const dates:object[] = []
     dates.push(...getCalender(year,month))
     
+    //htmlに格納していく
     let idx = 0
     for(let i=0;i<dates.length/7;i++){
       const tr = document.createElement("tr")
@@ -95,7 +100,6 @@
 
   //前後、todayのクリック処理
   next?.addEventListener('click',()=>{
-
     month ++
     if(month === 13){
       month = 1

@@ -9,7 +9,7 @@
     console.log(today_1);
     function getCalender(year, month) {
         var dates = [];
-        //head部分
+        //前月部分
         var d = new Date(year, month, 0).getDate(); //前月の最終日付
         var n = new Date(year, month, 1).getDay(); //今月1日の曜日
         for (var i = d - n + 1; i <= d; i++) {
@@ -19,7 +19,7 @@
                 isDisabled: true,
             });
         }
-        // body部分
+        // 今月部分
         var lastDate = new Date(year, month + 1, 0).getDate();
         for (var i = 1; i <= lastDate; i++) {
             dates.push({
@@ -28,7 +28,7 @@
                 isDisabled: false,
             });
         }
-        //foot部分
+        //来月部分
         var n2 = new Date(year, month + 1, 0).getDay(); //当月最終曜日
         var date = 1;
         for (var i = n2 + 1; i < 7; i++) {
@@ -50,14 +50,18 @@
             todayDate = today_1.getDate();
             todayFlag = true;
         }
-        while (tbody_1 === null || tbody_1 === void 0 ? void 0 : tbody_1.firstChild) { //ドットインストールから
+        //tbodyの子要素の削除
+        //ドットインストールから
+        while (tbody_1 === null || tbody_1 === void 0 ? void 0 : tbody_1.firstChild) {
             tbody_1.removeChild(tbody_1.firstChild);
         }
+        //タイトルの変更
         var title = document.getElementById("title");
         if (title && "innerHTML" in title)
             title.innerHTML = "".concat(year, "/").concat(month);
         var dates = [];
         dates.push.apply(dates, getCalender(year, month));
+        //htmlに格納していく
         var idx = 0;
         for (var i = 0; i < dates.length / 7; i++) {
             var tr = document.createElement("tr");
